@@ -1,0 +1,216 @@
+# version: '3.8'
+services:
+  mysql:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: Kartik@2025v
+      MYSQL_DATABASE: microservices_db
+    ports:
+      - "3307:3306"  # Map the host port 3307 to the container port 3306
+
+  dataserver:
+    build: ./dataserver
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mysql
+    environment:
+      DATABASE_HOST: mysql  # Set the host to the mysql service
+      DATABASE_USER: root
+      DATABASE_PASSWORD: Kartik@2025v  # Use the same password as defined above
+      DATABASE_NAME: microservices_db
+
+  postserver:
+    build: ./postserver
+    ports:
+      - "5001:5001"
+    depends_on:
+      - dataserver
+
+  getserver:
+    build: ./getserver
+    ports:
+      - "5002:5002"
+    depends_on:
+      - dataserver
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# version: '3.8'
+# services:
+#   dataserver:
+#     build: ./dataserver
+#     ports:
+#       - "5000:5000"
+#     depends_on:
+#       - mysql
+
+#   postserver:
+#     build: ./postserver
+#     ports:
+#       - "5001:5001"
+#     depends_on:
+#       - dataserver
+
+#   getserver:
+#     build: ./getserver
+#     ports:
+#       - "5002:5002"
+#     depends_on:
+#       - dataserver
+
+#   mysql_db:
+#     build: ./mysql
+#     environment:
+#       MYSQL_ROOT_PASSWORD: Kartik@2025v
+#       MYSQL_DATABASE: microservices_db
+#     ports:
+#       - "3307:3306"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# version: '3'  # Define the Docker Compose version
+
+# services:  # Define services (containers) for this project
+#   dataserver:
+#     build: ./data-ser  # Build the image from the dataserver Dockerfile
+#     ports:
+#       - "5000:5000"  # Map port 5000 on the container to port 5000 on the host
+#     depends_on:
+#       - mysql_db  # Ensure dataserver starts after MySQL is running
+
+#   postserver:
+#     build: ./post-ser  # Build the image from the postserver Dockerfile
+#     ports:
+#       - "5001:5001"  # Map port 5001 on the container to port 5001 on the host
+#     depends_on:
+#       - data-ser  # Ensure postserver starts after dataserver is running
+
+#   getserver:
+#     build: ./get-ser  # Build the image from the getserver Dockerfile
+#     ports:
+#       - "5002:5002"  # Map port 5002 on the container to port 5002 on the host
+#     depends_on:
+#       - data-ser  # Ensure getserver starts after dataserver is running
+
+#   mysql_db:
+#     build: ./mysql  # Build the image from the mysql Dockerfile
+#     environment:
+#       MYSQL_ROOT_PASSWORD: Kartik@2025v  # Set the MySQL root password
+#       MYSQL_DATABASE: microservices_db  # Create the database
+#     ports:
+#       - "3306:3306"  # Map port 3306 (MySQL default) on the container to the host
